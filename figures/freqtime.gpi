@@ -1,0 +1,30 @@
+# ======================================================================
+# freqtime
+# ----------------------------------------------------------------------
+set terminal postscript color enhanced eps dashed 'Times-Roman' 24
+set border 31 linewidth 3
+set output 'freqtime.eps'
+set size square 1.0
+set lmargin at screen 0.10
+set rmargin at screen 0.85
+set bmargin at screen 0.15
+set tmargin at screen 0.95
+set mapping cartesian
+set pm3d explicit map
+set palette rgbformulae 34, 13, 10
+set palette defined (0.00 "white", 0.015 "violet", 0.030 "blue", 0.045 "cyan", 0.060 "green", 0.075 "yellow", 0.090 "orange", 0.105 "red")
+unset title
+unset key
+set xrange[-25:25]
+set yrange[0.0:100.0]
+set xlabel 'Azimuthal Angular Momentum Quantum Number, m'
+set ylabel 'Time, t (osc. units)'
+set format x '%g'
+set format y '%g'
+set xtics auto
+set ytics auto
+set cbrange[0.0:0.1]
+unset cblabel
+unset colorbox
+splot '../fort.592' u 2:1:3 every 1:1 w pm3d
+# ======================================================================

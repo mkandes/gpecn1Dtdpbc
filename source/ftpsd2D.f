@@ -1,0 +1,94 @@
+! ======================================================================
+! PROGRAM FTPSD
+! ----------------------------------------------------------------------
+      PROGRAM FTPSD
+      IMPLICIT NONE
+
+!     Parameter Declarations:
+!     -----------------------
+      REAL, PARAMETER :: PI = 3.1415926535897932384626433832795028841971E0
+
+!     Input Variable and Array Declarations:
+!     --------------------------------------
+      INTEGER :: NUMBER_OF_GRID_POINTS
+      INTEGER :: NUMBER_OF_TIME_STEPS_BEFORE_WRITE
+      INTEGER :: START_FILE
+      INTEGER :: END_FILE
+
+      REAL :: RADIUS
+      REAL :: GAMMA_FACTOR
+      REAL :: CARRIER_FREQUENCY
+
+!     Internal Variable and Array Declarations:
+!     -----------------------------------------
+      CHARACTER(80) :: BUFFER
+
+      INTEGER :: CURRENT_GRID_POINT
+      INTEGER :: CURRENT_FILE
+      INTEGER :: LENGTH
+      INTEGER :: INFO
+
+      REAL :: ANGULAR_GRID_SPACING_SIZE
+      REAL :: TIME_STEP_SIZE
+
+      COMPLEX :: FOURIER_TRANSFORM
+
+      REAL, ALLOCATABLE, DIMENSION(:) :: ARCLENGTH
+      REAL, ALLOCATABLE, DIMENSION(:) :: DENSITY
+
+      COMPLEX, ALLOCATABLE, DIMENSION(:) :: WAVEFUNCTION
+
+!     Input Variable Assignment Read from Command-line Arguments:
+!     -----------------------------------------------------------
+      CALL GET_COMMAND_ARGUMENT(1,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) NUMBER_OF_GRID_POINTS
+
+      CALL GET_COMMAND_ARGUMENT(2,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) START_FILE
+
+      CALL GET_COMMAND_ARGUMENT(3,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) END_FILE
+
+      CALL GET_COMMAND_ARGUMENT(4,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) RADIUS
+
+      CALL GET_COMMAND_ARGUMENT(5,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) TIME_STEP_SIZE
+
+      CALL GET_COMMAND_ARGUMENT(6,BUFFER,LENGTH,INFO)
+      READ(BUFFER,*) CARRIER_FREQUENCY
+
+!     Internal Variable Assignment:
+!     -----------------------------
+      ANGULAR_GRID_SPACING_SIZE = 2.0E0*PI/FLOAT(NUMBER_OF_GRID_POINTS)
+
+!     Allocate Arrays:
+!     ----------------
+      ALLOCATE(WAVEFUNCTION(NUMBER_OF_GRID_POINTS))
+      ALLOCATE(ARCLENGTH(NUMBER_OF_GRID_POINTS))
+      ALLOCATE(DENSITY(NUMBER_OF_GRID_POINTS))
+
+!     Main Program:
+!     -------------
+      DO CURRENT_FILE = START_FILE, END_FILE
+      OPEN(UNIT=CURRENT_FILE,ACTION='READ',FORM='FORMATTED',STATUS='OLD')
+         DO CURRENT_GRID_POINT = 1, NUMBER_OF_GRID_POINTS
+            READ(CURRENT_FILE,*) ARCLENGTH(CURRENT_GRID_POINT), DENSITY(CURRENT_GRID_POINT)
+         ENDDO
+      CLOSE(UNIT=CURRENT_FILE,STATUS='SAVE')
+      FOURIER_TRANSFORM = CMPLX(0.0E0,0.0E0)
+         DO CURRENT_GRID_POINT = 1, NUMBER_OF_GRID_POINTS
+            FOURIER_TRANSFORM = FOURIER_TRANSFORM+CMPLX(DENSITY(CURRENT_GRID_POINT)*ANGULAR_GRID_SPACING_SIZE,0.0E0)*EXP(CMPLX(0.0E0,CARRIER_FREQUENCY*FLOAT(CURRENT_GRID_POINT-1)*ANGULAR_GRID_SPACING_SIZE))
+         ENDDO
+         WRITE(500,*) FLOAT(CURRENT_FILE-START_FILE)*TIME_STEP_SIZE, ATAN2(AIMAG(FOURIER_TRANSFORM),REAL(FOURIER_TRANSFORM))
+      ENDDO
+
+!     Deallocate Arrays:
+!     ------------------
+      DEALLOCATE(WAVEFUNCTION)
+      DEALLOCATE(ARCLENGTH)
+      DEALLOCATE(DENSITY)
+
+      STOP
+      ENDPROGRAM FTPSD
+! ======================================================================

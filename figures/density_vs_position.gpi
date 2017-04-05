@@ -1,0 +1,22 @@
+# =========================================================================
+# density vs. position
+# -------------------------------------------------------------------------
+set terminal postscript eps enhanced defaultplex color dashed dashlength 1.0 linewidth 1.0 rounded clip "Helvetica" 24
+set size 1.0
+set notitle
+set key on Left reverse samplen 4 spacing 1.5 width 0 height 0 noautotitles enhanced nobox font "Helvetica,24"
+set output "density_vs_position.eps"
+set xlabel "Position, r_o{/Symbol q} ( osc. units )" offset character 0, character 0
+set ylabel "Density, |{/Symbol y}({/Symbol q},t)|^2 (osc. units)" offset character 0, character 0
+set xrange  [ 0 : 62.8318530718 ] noreverse
+set yrange  [ 0 : 0.2 ] noreverse
+set xtics border mirror in scale default norotate offset character 0, character 0 autofreq
+set ytics border mirror in scale default norotate offset character 0, character 0 autofreq
+set format x "%g"
+set format y "%g"
+set xzeroaxis lt 2 linewidth 6 linecolor rgb "#696969"
+set yzeroaxis lt 2 linewidth 6 linecolor rgb "#696969"
+set arrow 1 from 15.7079632679,0.0 to 15.707963267,0.2 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 2 from 47.1238898038,0.0 to 47.1238898038,0.2 nohead lt 0 lw 6 linecolor rgb "#696969"
+plot '../fort.10314' using 1:2 axes x1y1 notitle with lines linetype 1 linewidth 5 linecolor "#DC143C"
+# =========================================================================

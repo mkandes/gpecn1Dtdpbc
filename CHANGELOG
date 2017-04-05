@@ -1,0 +1,14 @@
+CHANGELOG : GPECN1DTDPBC
+
+dev
+
+    * developing some minor improvements to continue to study the Sagnac
+      effect as well as the dynamics of an effective one-dimensional 
+      Compton generator
+
+2017/04/04 v0.5.0
+
+    + a rebuild of GPECN1DTDPBC from M. C. Kandes, "Sagnac 
+      Interferometry with Bose-Einstein Condensates in a Uniformly 
+      Rotating Ring Trap", Ph.D. Qualifying Exam, Claremont Graduate 
+      University & San Diego State, University (2011).

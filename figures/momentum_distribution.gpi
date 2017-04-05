@@ -1,0 +1,25 @@
+# ======================================================================
+# momentum distribution
+# ----------------------------------------------------------------------
+set terminal postscript monochrome enhanced eps dashed 'Times-Roman' 24
+set border 31 linewidth 3
+set output 'momentum_distribution.eps'
+set size 1.0
+set key on at -14,0.095 Left reverse samplen 1 spacing 1.0 width 0 height 0 noautotitles enhanced nobox
+unset title
+set xrange[-25:25]
+set yrange[0.0:0.1]
+set xlabel 'Angular Momentum Quantum Number, m'
+set ylabel 'Squared Absolute Value of Expansion Coefficient, |c_m|^2(t=$T) (osc. units)'
+set format x '%g'
+set format y '%g'
+set xtics auto
+set ytics auto
+set xzeroaxis
+set yzeroaxis
+set label '{/Symbol r}_o = 10' at 18,0.095 font ',20'
+set label 'g_{1D} = 0' at 18,0.0875 font ',20'
+set label '{/Symbol k}_{/Symbol j} = 0.1' at 18,0.08 font ',20'
+set label 'l=10' at 18, 0.0725 font ',20'
+plot '../fort.20000' u 1:2 every 1 title '{/Times-Roman=20 {/Symbol W} = 0.0020}' with boxes lt 1 lw 2
+# ======================================================================

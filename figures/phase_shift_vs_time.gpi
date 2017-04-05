@@ -1,0 +1,30 @@
+# =========================================================================
+# phase shift vs. time
+# -------------------------------------------------------------------------
+set terminal postscript eps enhanced defaultplex color dashed dashlength 1.0 linewidth 1.0 rounded clip "Helvetica" 24
+set size square 1.0
+set notitle
+set key on Left at 65, 3.0 reverse samplen 4 spacing 1.5 width 0 height 0 noautotitles enhanced nobox font "Helvetica,24" #textcolor rgb "#696969"
+set output "phase_shift_vs_time.eps"
+set xlabel "Time, t (osc. units)" offset character 0, character 0
+set ylabel 'Phase Shift, {/Symbol D}{/Symbol j} = tan^{-1}[Im(F)/Re(F)] (rad.)' offset character 0, character 0
+set y2label 'Amplitude, |F| (osc. units)'
+set xrange[0:100]
+set yrange[0:3.14]
+set y2range[0.0:0.1]
+set xtics border mirror in scale default norotate offset character 0, character 0 autofreq
+set ytics border mirror in scale default norotate offset character 0, character 0 autofreq
+set y2tics border mirror in scale default norotate offset character 0, character 0 autofreq
+set format x "%g"
+set format y "%g"
+set format y2 "%g"
+set arrow 1 from 31.41592653589793,0.0 to 31.41592653589793,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 2 from 62.83185307179586,0.0 to 62.83185307179586,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 3 from 94.24777960769379,0.0 to 94.24777960769379,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
+set xzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
+set yzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
+f(x) = 2.0 * 0.001 * 10 * x
+plot '../fort.500' using 1:2 axes x1y1 title 'Phase Shift' with lines linetype 1 linewidth 5 linecolor "#DC143C", \
+     '../fort.500' using 1:(sqrt($3**2+$4**2)) axes x2y2 title 'Amplitude' with lines linetype 1 linewidth 5 linecolor "#4682B4", \
+    f(x) axes x1y1 not with lines linetype 0 linewidth 5 linecolor rgb "#696969"
+# =========================================================================

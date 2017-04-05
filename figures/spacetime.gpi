@@ -1,0 +1,53 @@
+# ======================================================================
+# spacetime
+# ---------------------------------------------------------------------
+set terminal postscript color enhanced eps dashed 'Times-Roman' 24
+set border 31 linewidth 3
+set output 'spacetime.eps'
+#set multiplot
+set size square 1.0
+set lmargin at screen 0.10
+set rmargin at screen 0.85
+set bmargin at screen 0.15
+set tmargin at screen 0.95
+set mapping cartesian
+set pm3d explicit map
+set palette rgbformulae 34, 13, 10
+set palette defined (0.00 "white", 0.015 "violet", 0.030 "blue", 0.045 "cyan", 0.060 "green", 0.075 "yellow", 0.090 "orange", 0.105 "red")
+unset title
+unset key
+set xrange[0.0:62.832]
+set yrange[0.0:100.0]
+set xlabel 'Azimuthal Position, {/Symbol r}_o{/Symbol f} (osc. units)'
+set ylabel 'Time, t (osc. units)'
+set format x '%g'
+set format y '%g'
+set xtics auto
+set ytics auto
+set arrow 1 from 47.123889804,0,0.12 to 47.123889804,100,0.12 lt -1 nohead
+set arrow 2 from 15.707963268,0,0.12 to 15.707963268,100,0.12 lt -1 nohead
+set arrow 3 from 0,31.4,0.12 to 62.831853072,31.4,0.12 lt -1 nohead
+set arrow 4 from 0,62.8,0.12 to 62.831853072,62.8,0.12 lt -1 nohead
+set arrow 5 from 0,94.3,0.12 to 62.831853072,94.3,0.12 lt -1 nohead
+set cbrange[0.0:0.1]
+unset cblabel
+unset colorbox
+splot '../fort.591' u 2:1:3 every 1:1 w pm3d
+#ddset size square 1.0
+#set lmargin at screen 0.195625
+#set rmargin at screen 0.85
+#set bmargin at screen 0.15
+#set tmargin at screen 0.95
+#unset xtics
+#unset ytics
+#unset xlabel
+#unset ylabel
+#set arrow 1 from 47.123889804,0,0.12 to 47.123889804,100,0.12 lt -1 nohead
+#set arrow 2 from 15.707963268,0,0.12 to 15.707963268,100,0.12 lt -1 nohead
+#set arrow 3 from 0,31.4,0.12 to 62.831853072,31.4,0.12 lt -1 nohead
+#set arrow 4 from 0,62.8,0.12 to 62.831853072,62.8,0.12 lt -1 nohead
+#set arrow 5 from 0,94.3,0.12 to 62.831853072,94.3,0.12 lt -1 nohead
+#f(x) = 0
+#plot f(x) w l lt 1
+#unset multiplot
+# ======================================================================
