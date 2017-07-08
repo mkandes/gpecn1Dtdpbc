@@ -57,7 +57,8 @@
 ! AUTHOR
 !
 !     Marty Kandes, Ph.D.
-!     Distributed High-Throughput Computing Group
+!     Computational & Data Science Research Specialist
+!     User Services Group
 !     San Diego Supercomputer Center
 !     University of California, San Diego
 !

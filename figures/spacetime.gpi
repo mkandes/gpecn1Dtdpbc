@@ -1,53 +1,72 @@
 # ======================================================================
-# spacetime
-# ---------------------------------------------------------------------
+# NAME
+# 
+#     spacetime.gpi
+#
+# DESCRIPTION
+#
+#     A gnuplot script for creating a (2D) surface map of the 
+#     spacetime-density data (fort.591) output by spacetime.x
+#
+# USAGE
+#
+#     gnuplot spacetime.gpi
+#
+# AUTHOR
+#
+#     Marty Kandes, Ph.D.
+#     Computational & Data Science Research Specialist
+#     User Services Group
+#     San Diego Supercomputer Center
+#     University of California, San Diego
+#
+# COPYRIGHT
+#     
+#     Copyright (c) 2017 Martin Charles Kandes
+#
+# LICENSE
+#
+#     The MIT License (MIT)
+#
+# LAST UPDATED
+#
+#     Friday, July 7th, 2017
+#
+# ----------------------------------------------------------------------
+
 set terminal postscript color enhanced eps dashed 'Times-Roman' 24
 set border 31 linewidth 3
-set output 'spacetime.eps'
-#set multiplot
-set size square 1.0
-set lmargin at screen 0.10
-set rmargin at screen 0.85
-set bmargin at screen 0.15
+set lmargin at screen 0.15
+set rmargin at screen 0.95
+set bmargin at screen 0.20
 set tmargin at screen 0.95
-set mapping cartesian
+set output 'spacetime.eps'
+set size 1.0
+unset title
+unset key 
+unset colorbox
 set pm3d explicit map
 set palette rgbformulae 34, 13, 10
-set palette defined (0.00 "white", 0.015 "violet", 0.030 "blue", 0.045 "cyan", 0.060 "green", 0.075 "yellow", 0.090 "orange", 0.105 "red")
-unset title
-unset key
-set xrange[0.0:62.832]
-set yrange[0.0:100.0]
-set xlabel 'Azimuthal Position, {/Symbol r}_o{/Symbol f} (osc. units)'
-set ylabel 'Time, t (osc. units)'
+set palette defined (0.00 "white", 0.015 "violet", 0.030 "blue", \
+  0.045 "cyan", 0.060 "green", 0.075 "yellow", 0.090 "orange", \
+  0.105 "red")
+set xrange[0:2*10*pi]
+set yrange[0:100]
+set cbrange[0.0:0.1]
+set xlabel 'Azimuth, {/Symbol q} (rad.)'
+set ylabel 'Time, t (osc. units)' offset -2,0,0
+unset cblabel
 set format x '%g'
 set format y '%g'
-set xtics auto
-set ytics auto
-set arrow 1 from 47.123889804,0,0.12 to 47.123889804,100,0.12 lt -1 nohead
-set arrow 2 from 15.707963268,0,0.12 to 15.707963268,100,0.12 lt -1 nohead
-set arrow 3 from 0,31.4,0.12 to 62.831853072,31.4,0.12 lt -1 nohead
-set arrow 4 from 0,62.8,0.12 to 62.831853072,62.8,0.12 lt -1 nohead
-set arrow 5 from 0,94.3,0.12 to 62.831853072,94.3,0.12 lt -1 nohead
-set cbrange[0.0:0.1]
-unset cblabel
-unset colorbox
-splot '../fort.591' u 2:1:3 every 1:1 w pm3d
-#ddset size square 1.0
-#set lmargin at screen 0.195625
-#set rmargin at screen 0.85
-#set bmargin at screen 0.15
-#set tmargin at screen 0.95
-#unset xtics
-#unset ytics
-#unset xlabel
-#unset ylabel
-#set arrow 1 from 47.123889804,0,0.12 to 47.123889804,100,0.12 lt -1 nohead
-#set arrow 2 from 15.707963268,0,0.12 to 15.707963268,100,0.12 lt -1 nohead
-#set arrow 3 from 0,31.4,0.12 to 62.831853072,31.4,0.12 lt -1 nohead
-#set arrow 4 from 0,62.8,0.12 to 62.831853072,62.8,0.12 lt -1 nohead
-#set arrow 5 from 0,94.3,0.12 to 62.831853072,94.3,0.12 lt -1 nohead
-#f(x) = 0
-#plot f(x) w l lt 1
-#unset multiplot
+set xtics ('0' 0, '{/Symbol p}/2' 10*pi/2, '{/Symbol p}' 10*pi, \
+  '3{/Symbol p}/2' 3*10*pi/2, '2{/Symbol p}' 2*10*pi)
+set ytics ('0' 0, '{/Symbol t}_c' 10*pi, '2{/Symbol t}_c' 2*10*pi, '3{/Symbol t}_c' 3*10*pi) 
+f(x,y) = 0
+splot '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.591' u 2:1:3 every 1:1 w pm3d, \
+      'spacetime.dat' u 1:2:(f($1,$2)) w lines linetype -1, \
+      'spacetime.dat' u 3:4:(f($3,$4)) w lines linetype -1, \
+      'spacetime.dat' u 5:6:(f($5,$6)) w lines linetype -1, \
+      'spacetime.dat' u 7:8:(f($7,$8)) w lines linetype -1, \
+      'spacetime.dat' u 9:10:(f($9,$10)) w lines linetype -1
+
 # ======================================================================

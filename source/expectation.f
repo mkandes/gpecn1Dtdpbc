@@ -12,7 +12,8 @@
 ! AUTHOR
 !
 !     Marty Kandes, Ph.D.
-!     Distributed High-Throughput Computing Group
+!     Computational & Data Science Research Specialist
+!     User Services Group
 !     San Diego Supercomputer Center
 !     University of California, San Diego
 !
@@ -26,7 +27,7 @@
 !
 ! LAST UPDATED
 !
-!     Friday, March 31st, 2017                                   
+!     Wednesday, April 11th, 2017                                   
 !
 ! ----------------------------------------------------------------------
       PROGRAM EXPECTATION
@@ -86,13 +87,6 @@
 
       CALL GET_COMMAND_ARGUMENT(6,BUFFER,LENGTH,INFO)
       READ(BUFFER,*) GAMMA_FACTOR
-
-      WRITE(6,*) NUMBER_OF_GRID_POINTS
-      WRITE(6,*) NUMBER_OF_TIME_STEPS
-      WRITE(6,*) NUMBER_OF_TIME_STEPS_BEFORE_WRITE
-      WRITE(6,*) RADIUS
-      WRITE(6,*) ROTATION_RATE
-      WRITE(6,*) GAMMA_FACTOR
 
 !     Allocate Arrays:
 !     ----------------
@@ -178,4 +172,4 @@
 
       STOP
       ENDPROGRAM EXPECTATION
-! ======================================================================
+

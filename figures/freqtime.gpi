@@ -1,6 +1,39 @@
 # ======================================================================
-# freqtime
+# NAME
+# 
+#     freqtime.gpi
+#
+# DESCRIPTION
+#
+#     A gnuplot script for creating a (2D) surface map of the 
+#     spacetime-Fourier data (fort.592) output by freqtime.x
+#
+# USAGE
+#
+#     gnuplot freqtime.gpi
+#
+# AUTHOR
+#
+#     Marty Kandes, Ph.D.
+#     Computational & Data Science Research Specialist
+#     User Services Group
+#     San Diego Supercomputer Center
+#     University of California, San Diego
+#
+# COPYRIGHT
+#     
+#     Copyright (c) 2017 Martin Charles Kandes
+#
+# LICENSE
+#
+#     The MIT License (MIT)
+#
+# LAST UPDATED
+#
+#     Friday, July 7th, 2017
+#
 # ----------------------------------------------------------------------
+
 set terminal postscript color enhanced eps dashed 'Times-Roman' 24
 set border 31 linewidth 3
 set output 'freqtime.eps'
@@ -26,5 +59,6 @@ set ytics auto
 set cbrange[0.0:0.1]
 unset cblabel
 unset colorbox
-splot '../fort.592' u 2:1:3 every 1:1 w pm3d
+splot '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.592' u 2:1:3 every 1:1 w pm3d
+
 # ======================================================================

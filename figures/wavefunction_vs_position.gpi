@@ -1,0 +1,65 @@
+# ======================================================================
+# NAME
+# 
+#     wavefunction_vs_position.gpi
+#
+# DESCRIPTION
+#
+#     A gnuplot script for creating a plot of the (probability) density,
+#     real and imaginary components of an ascii-formatted wave function
+#     (fort.1XXXX) output by gpecn1Dtdpbc.x after it has been converted
+#     from binary to ascii by binary.x in gpecn1Dtdpbc.sh.
+#
+# USAGE
+#
+#     gnuple wavefunction_vs_position.gpi
+#
+# AUTHOR
+#
+#     Marty Kandes, Ph.D.
+#     Computational & Data Science Research Specialist
+#     User Services Group
+#     San Diego Supercomputer Center
+#     University of California, San Diego
+#
+# COPYRIGHT
+#     
+#     Copyright (c) 2017 Martin Charles Kandes
+#
+# LICENSE
+#
+#     The MIT License (MIT)
+#
+# LAST UPDATED
+#
+#     Friday, July 7th, 2017
+#
+# ----------------------------------------------------------------------
+
+set terminal postscript eps enhanced defaultplex color dashed dashlength 1.0 linewidth 1.0 rounded clip "Helvetica" 24
+set size 1.0 
+set notitle
+set key on Left reverse samplen 4 spacing 1.5 width 0 height 0 noautotitles enhanced nobox font "Helvetica,22" textcolor rgb "#696969"
+set output "wavefunction_vs_position.eps"
+set xlabel "Azimuth, {/Symbol q} (rad.)" offset character 0, character 0
+set ylabel "{/Symbol y}{/Symbol \050}{/Symbol q},t{/Symbol \051} (osc. units)" offset character 0, character 0
+set xrange  [0:2*pi*10] noreverse
+set yrange  [-0.4:0.4] noreverse
+set xtics border mirror in scale default norotate offset character 0, character 0 autofreq
+set ytics border mirror in scale default norotate offset character 0, character 0 autofreq
+set format x "%g"
+set format y "%g"
+set xtics ('0' 0,'{/Symbol p}/2' 10*pi/2, '{/Symbol p}' 10*pi,'3{/Symbol p}/2' 3*10*pi/2, '2{/Symbol p}' 2*10*pi)
+set xzeroaxis lt 2 linewidth 6 linecolor rgb "#696969"
+set yzeroaxis lt 2 linewidth 6 linecolor rgb "#696969"
+set arrow 1 from 2*pi*10/4,0.0 to 2*pi*10/4,0.8 nohead lt 0 lw 3 linecolor rgb "#696969"
+set arrow 2 from 2*pi*10/2,0.0 to 2*pi*10/2,0.8 nohead lt 0 lw 3 linecolor rgb "#696969"
+set arrow 3 from 3*2*pi*10/4,0.0 to 3*2*pi*10/4,0.8 nohead lt 0 lw 3 linecolor rgb "#696969" 
+set arrow 4 from 0.0,0.15 to 2*pi*10,0.15 nohead lt 0 lw 3 linecolor rgb "#696969"
+set arrow 5 from 0.0,0.30 to 2*pi*10,0.30 nohead lt 0 lw 3 linecolor rgb "#696969"
+set arrow 6 from 0.0,0.45 to 2*pi*10,0.45 nohead lt 0 lw 3 linecolor rgb "#696969"
+plot '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.11314' using 1:2 axes x1y1 title 'Density' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
+     '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.11314' using 1:3 axes x1y1 title 'Re' with lines dashtype 5 linewidth 5 linecolor '#da7c30', \
+     '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.11314' using 1:4 axes x1y1 title 'Im' with lines dashtype 2 linewidth 5 linecolor '#6b4c9a'
+
+# =========================================================================

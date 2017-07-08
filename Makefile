@@ -13,7 +13,7 @@
 #
 # LAST UPDATED
 #
-#     Saturday, March 25th, 2017
+#     Wednesday, July 5th, 2017
 #
 # ----------------------------------------------------------------------
 COMPILER := gfortran
@@ -28,6 +28,7 @@ COMPILER_OPTIONS := -fimplicit-none \
 SOURCE_DIR := source
 LAPACK_DIR := libraries/lapack
 BUILD_DIR := build
+FIGURE_DIR := figures
 
 all: gpecn1Dtdpbc.x \
      wavefunc.x \
@@ -158,4 +159,5 @@ $(BUILD_DIR)/freqtime.o: $(SOURCE_DIR)/freqtime.f
 clean:
 	rm -r $(BUILD_DIR)/*.o
 	rm -r *.x
+
 # ======================================================================

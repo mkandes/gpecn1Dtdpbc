@@ -1,30 +1,66 @@
-# =========================================================================
-# phase shift vs. time
-# -------------------------------------------------------------------------
+# ======================================================================
+# NAME
+# 
+#     phase_shift_vs_time.gpi
+#
+# DESCRIPTION
+#
+#     A gnuplot script for creating a plot of the Fourier-transform phase 
+#     shift data as a function of time (fort.500.XX) computed by ftpsd.x 
+#     from the observed in the probability densities (fort.XXXX) 
+#     generated in interferometry-related simulations.
+#
+# USAGE
+#
+#     phase_shift_vs_time.gpi
+#
+# AUTHOR
+#
+#     Marty Kandes, Ph.D.
+#     Computational & Data Science Research Specialist
+#     User Services Group
+#     San Diego Supercomputer Center
+#     University of California, San Diego
+#
+# COPYRIGHT
+#     
+#     Copyright (c) 2017 Martin Charles Kandes
+#
+# LICENSE
+#
+#     The MIT License (MIT)
+#
+# LAST UPDATED
+#
+#     Friday, July 7th, 2017
+#
+# ----------------------------------------------------------------------
+
 set terminal postscript eps enhanced defaultplex color dashed dashlength 1.0 linewidth 1.0 rounded clip "Helvetica" 24
-set size square 1.0
+set size 1.0
 set notitle
-set key on Left at 65, 3.0 reverse samplen 4 spacing 1.5 width 0 height 0 noautotitles enhanced nobox font "Helvetica,24" #textcolor rgb "#696969"
+set key left Left reverse samplen 4 spacing 1.5 width 0 height 0 noautotitles enhanced nobox font "Helvetica,22"
 set output "phase_shift_vs_time.eps"
 set xlabel "Time, t (osc. units)" offset character 0, character 0
-set ylabel 'Phase Shift, {/Symbol D}{/Symbol j} = tan^{-1}[Im(F)/Re(F)] (rad.)' offset character 0, character 0
-set y2label 'Amplitude, |F| (osc. units)'
+set ylabel 'Phase Shift, {/Symbol D}{/Symbol j} = arg{\173}F_{2L}{\133}{/Symbol \174}{/Symbol y}{/Symbol \050}{/Symbol q},t{/Symbol \051}{/Symbol \174}^2{\135}{\175} (rad.)' offset character 0, character 0
+set y2label 'Amplitude, {\174}F_{2L}{\133}{/Symbol \174}{/Symbol y}{/Symbol \050}{/Symbol q},t{/Symbol \051}{/Symbol \174}^2{\135}{\174} (osc. units)'
 set xrange[0:100]
-set yrange[0:3.14]
+set yrange[0:pi]
 set y2range[0.0:0.1]
-set xtics border mirror in scale default norotate offset character 0, character 0 autofreq
-set ytics border mirror in scale default norotate offset character 0, character 0 autofreq
+set xtics ('0' 0, '{/Symbol t}_c' 10*pi, '2{/Symbol t}_c' 2*10*pi, '3{/Symbol t}_c' 3*10*pi)
+set ytics ('0' 0,'{/Symbol p}/4' pi/4, '{/Symbol p}/2' pi/2,'3{/Symbol p}/4' 3*pi/4, '{/Symbol p}' pi)
 set y2tics border mirror in scale default norotate offset character 0, character 0 autofreq
 set format x "%g"
 set format y "%g"
 set format y2 "%g"
-set arrow 1 from 31.41592653589793,0.0 to 31.41592653589793,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
-set arrow 2 from 62.83185307179586,0.0 to 62.83185307179586,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
-set arrow 3 from 94.24777960769379,0.0 to 94.24777960769379,6.28318530718 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 1 from 31.41592653589793,0.0 to 31.41592653589793,3.14159265359 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 2 from 62.83185307179586,0.0 to 62.83185307179586,3.14159265359 nohead lt 0 lw 6 linecolor rgb "#696969"
+set arrow 3 from 94.24777960769379,0.0 to 94.24777960769379,3.14159265359 nohead lt 0 lw 6 linecolor rgb "#696969"
 set xzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
 set yzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
-f(x) = 2.0 * 0.001 * 10 * x
-plot '../fort.500' using 1:2 axes x1y1 title 'Phase Shift' with lines linetype 1 linewidth 5 linecolor "#DC143C", \
-     '../fort.500' using 1:(sqrt($3**2+$4**2)) axes x2y2 title 'Amplitude' with lines linetype 1 linewidth 5 linecolor "#4682B4", \
+f(x) = 2.0 * 0.0015 * 10 * x
+plot '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.500.20' using 1:2 axes x1y1 title 'Phase Shift' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
+     '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.500.20' using 1:(sqrt($3**2+$4**2)) axes x1y2 title 'Amplitude' with lines dashtype 3 linewidth 5 linecolor '#396ab1', \
     f(x) axes x1y1 not with lines linetype 0 linewidth 5 linecolor rgb "#696969"
+
 # =========================================================================

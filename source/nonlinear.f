@@ -15,7 +15,7 @@
 ! AUTHOR
 !
 !     Marty Kandes, Ph.D.
-!     Computational Data Science Research Specialist
+!     Computational & Data Science Research Specialist
 !     User Services Group
 !     San Diego Supercomputer Center
 !     University of California, San Diego
