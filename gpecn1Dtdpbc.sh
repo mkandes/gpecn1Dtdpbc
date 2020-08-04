@@ -24,25 +24,25 @@
 #
 # COPYRIGHT
 #     
-#     Copyright (c) 2017 Martin Charles Kandes
+#     Copyright (c) 2010 - 2020 Martin Charles Kandes
 #
 # LAST UPDATED
 #
-#     Friday, July 7th, 2017
+#     Monday, August 3rd, 2020
 #
 # ----------------------------------------------------------------------
 
 # Declare the version number of gpecn1Dtdpbc.
-declare -r version_number='0.5.1'
+declare -r version_number='0.5.2'
 
 # Declare system name the simulation will be performed on.
-declare -r system_name='ivymike'
+declare -r system_name='comet'
 
 # Declare run type.
 declare -r run_type='sagnac'
 
 # Declare run date.
-declare -r run_date='20170707'
+declare -r run_date='20200803'
 
 # Declare run number.
 declare -r run_number='001'
@@ -81,7 +81,14 @@ declare -r gamma_factor=1.0
 #     wavefunc.x generates a superposition of two quantized plane wave 
 #     solutions for a one-dimensional ring.
 #
-declare -r wave_function_switch=0
+#
+#   wave_function_switch=2
+#
+#     wavefunc.x generates a pair of Bogoliubov-like plane wave
+#     excitations on top of a background ground-state solution for a
+#     one-dimensional ring.
+#
+declare -r wave_function_switch=2
 
 # Define external potential acting on wave function. 
 #
@@ -143,15 +150,26 @@ declare -r initial_angular_position=1.570796326794897
 # the complement of amplitude_1 to conserve (unit) probability. i.e., 
 # amplitude_2=sqrt(1-amplitude_1^2). Therefore, for a symmetric 
 # superposition set amplitude_1 = 1/sqrt(2).
-declare -r amplitude_1=0.707106781186548
+#declare -r amplitude_1=0.707106781186548
+declare -r amplitude_1=0.070710678
+
+# When the wave_function_switch=2, both amplitude_1 and amplitude_2 are
+# set independently. Most importantly, however, the sum of the squares 
+# of both values must be less than 1. In general, it is assumed that 
+# these values will be much less than 1 in order to generate 
+# small-amplitude Bogoliubov-like plane wave excitations on a constant
+# background ground-state. For a symmetric plane wave superposition on
+# top of the ground-state, set amplitude_1 = amplitude_2.
+#declare -r amplitude_2=0.707106781186548
+declare -r amplitude_2=0.070710678
 
 # Define initial phases associated with the two quantized plane wave 
-# solutions in the superposition created by wave_function_switch=1.
+# solutions in the superposition created by wave_function_switch=1,2.
 declare -r initial_phase_1=0.0
 declare -r initial_phase_2=0.0
 
 # Define initial angular momenta imparted to the two momentum states 
-# created in wavefunc.x's wave_function_switch=0,1 options.
+# created in wavefunc.x's wave_function_switch=0,1,2 options.
 declare -r angular_momentum_1=10
 declare -r angular_momentum_2=-10
 
@@ -162,7 +180,7 @@ declare -r angular_momentum_2=-10
 declare -r carrier_frequency="$(( ${angular_momentum_1} - ${angular_momentum_2} ))"
 
 # Define strength of nonlinear mean-field interaction.
-declare -r nonlinear_coupling_amplitude=0.0
+declare -r nonlinear_coupling_amplitude=50.0
 
 # Define angular velocity of the rotating one-dimensional ring.
 declare -r rotation_rate_of_ring=0.0015
@@ -191,6 +209,7 @@ echo "$(set -o posix; set)" > "${run_directory}.output"
              "${gaussian_oscillator_strength}" \
              "${initial_angular_position}" \
              "${amplitude_1}" \
+             "${amplitude_2}" \
              "${angular_momentum_1}" \
              "${angular_momentum_2}" \
              "${initial_phase_1}" \

@@ -24,7 +24,7 @@
 #
 # COPYRIGHT
 #     
-#     Copyright (c) 2017 Martin Charles Kandes
+#     Copyright (c) 2010 - 2020 Martin Charles Kandes
 #
 # LICENSE
 #
@@ -32,7 +32,7 @@
 #
 # LAST UPDATED
 #
-#     Friday, July 7th, 2017
+#     Monday, August 3rd, 2020
 #
 # ----------------------------------------------------------------------
 
@@ -44,9 +44,9 @@ set output "phase_shift_vs_time.eps"
 set xlabel "Time, t (osc. units)" offset character 0, character 0
 set ylabel 'Phase Shift, {/Symbol D}{/Symbol j} = arg{\173}F_{2L}{\133}{/Symbol \174}{/Symbol y}{/Symbol \050}{/Symbol q},t{/Symbol \051}{/Symbol \174}^2{\135}{\175} (rad.)' offset character 0, character 0
 set y2label 'Amplitude, {\174}F_{2L}{\133}{/Symbol \174}{/Symbol y}{/Symbol \050}{/Symbol q},t{/Symbol \051}{/Symbol \174}^2{\135}{\174} (osc. units)'
-set xrange[0:100]
+set xrange[30:32]
 set yrange[0:pi]
-set y2range[0.0:0.1]
+set y2range[0.0:0.01]
 set xtics ('0' 0, '{/Symbol t}_c' 10*pi, '2{/Symbol t}_c' 2*10*pi, '3{/Symbol t}_c' 3*10*pi)
 set ytics ('0' 0,'{/Symbol p}/4' pi/4, '{/Symbol p}/2' pi/2,'3{/Symbol p}/4' 3*pi/4, '{/Symbol p}' pi)
 set y2tics border mirror in scale default norotate offset character 0, character 0 autofreq
@@ -59,8 +59,8 @@ set arrow 3 from 94.24777960769379,0.0 to 94.24777960769379,3.14159265359 nohead
 set xzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
 set yzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
 f(x) = 2.0 * 0.0015 * 10 * x
-plot '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.500.20' using 1:2 axes x1y1 title 'Phase Shift' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
-     '../gpecn1Dtdpbc-v0.5.1-ivymike-sagnac-20170707-001/fort.500.20' using 1:(sqrt($3**2+$4**2)) axes x1y2 title 'Amplitude' with lines dashtype 3 linewidth 5 linecolor '#396ab1', \
+plot '../gpecn1Dtdpbc-v0.5.2-comet-sagnac-20200803-001/fort.500.20' using 1:2 axes x1y1 title 'Phase Shift' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
+     '../gpecn1Dtdpbc-v0.5.2-comet-sagnac-20200803-001/fort.500.20' using 1:(sqrt($3**2+$4**2)) axes x1y2 title 'Amplitude' with lines dashtype 3 linewidth 5 linecolor '#396ab1', \
     f(x) axes x1y1 not with lines linetype 0 linewidth 5 linecolor rgb "#696969"
 
 # =========================================================================
