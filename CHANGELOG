@@ -6,6 +6,21 @@ dev
       effect as well as the dynamics of an effective one-dimensional 
       Compton generator
 
+2021/01/02 v0.5.3
+
+    + Converted README to README.md. Reset default simulation of the
+      gpecn1Dtdpbc.sh run script to be one of the example simulations 
+      that exhibits 'An Initial Angular Momentum Dependence of the 
+      Sagnac Effect for Matter Waves'. Also updated CHANGELOG and 
+      removed legacy TESTED sections in the header of the Makefile.
+
+2020/08/03 v0.5.2
+
+    + Added wave_function_switch=2, which allows wavefunc.x to generate
+      a pair of Bogoliubov-like plane wave excitations on top of a 
+      constant background ground-state solution for a one-dimensional 
+      ring.
+
 2017/07/07 v0.5.1
 
     + minor modifications to the run script gpecn1Dtdpbc.sh; added 

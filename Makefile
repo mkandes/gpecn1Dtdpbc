@@ -1,19 +1,9 @@
 # ======================================================================
 # Makefile : GPECN1DTDPBC
 #
-# TESTED
-#
-#     GNU Make 3.81
-#     GNU Fortran (Homebrew GCC 6.3.0_1) 6.3.0
-#
-# LAST TESTED
-# 
-#     GNU Make 3.81
-#     GNU Fortran (Homebrew GCC 6.3.0_1) 6.3.0
-#
 # LAST UPDATED
 #
-#     Wednesday, July 5th, 2017
+#     January, 2nd, 2021
 #
 # ----------------------------------------------------------------------
 COMPILER := gfortran

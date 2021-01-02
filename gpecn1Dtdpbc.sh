@@ -18,31 +18,31 @@
 #
 #     Marty Kandes, Ph.D.
 #     Computational & Data Science Research Specialist
-#     User Services Group
+#     High-Perfomance Computing User Services Group
 #     San Diego Supercomputer Center
 #     University of California, San Diego
 #
 # COPYRIGHT
 #     
-#     Copyright (c) 2010 - 2020 Martin Charles Kandes
+#     Copyright (c) 2010 - 2021 Martin Charles Kandes
 #
 # LAST UPDATED
 #
-#     Monday, August 3rd, 2020
+#     Saturday, January 2nd, 2021
 #
 # ----------------------------------------------------------------------
 
 # Declare the version number of gpecn1Dtdpbc.
-declare -r version_number='0.5.2'
+declare -r version_number='0.5.3'
 
 # Declare system name the simulation will be performed on.
-declare -r system_name='comet'
+declare -r system_name='expanse'
 
 # Declare run type.
 declare -r run_type='sagnac'
 
 # Declare run date.
-declare -r run_date='20200803'
+declare -r run_date='20210102'
 
 # Declare run number.
 declare -r run_number='001'
@@ -81,14 +81,13 @@ declare -r gamma_factor=1.0
 #     wavefunc.x generates a superposition of two quantized plane wave 
 #     solutions for a one-dimensional ring.
 #
-#
 #   wave_function_switch=2
 #
 #     wavefunc.x generates a pair of Bogoliubov-like plane wave
 #     excitations on top of a background ground-state solution for a
 #     one-dimensional ring.
 #
-declare -r wave_function_switch=2
+declare -r wave_function_switch=0
 
 # Define external potential acting on wave function. 
 #
@@ -150,8 +149,8 @@ declare -r initial_angular_position=1.570796326794897
 # the complement of amplitude_1 to conserve (unit) probability. i.e., 
 # amplitude_2=sqrt(1-amplitude_1^2). Therefore, for a symmetric 
 # superposition set amplitude_1 = 1/sqrt(2).
-#declare -r amplitude_1=0.707106781186548
-declare -r amplitude_1=0.070710678
+declare -r amplitude_1=0.707106781186548
+#declare -r amplitude_1=0.070710678
 
 # When the wave_function_switch=2, both amplitude_1 and amplitude_2 are
 # set independently. Most importantly, however, the sum of the squares 
@@ -160,8 +159,8 @@ declare -r amplitude_1=0.070710678
 # small-amplitude Bogoliubov-like plane wave excitations on a constant
 # background ground-state. For a symmetric plane wave superposition on
 # top of the ground-state, set amplitude_1 = amplitude_2.
-#declare -r amplitude_2=0.707106781186548
-declare -r amplitude_2=0.070710678
+declare -r amplitude_2=0.707106781186548
+#declare -r amplitude_2=0.070710678
 
 # Define initial phases associated with the two quantized plane wave 
 # solutions in the superposition created by wave_function_switch=1,2.
@@ -180,10 +179,10 @@ declare -r angular_momentum_2=-10
 declare -r carrier_frequency="$(( ${angular_momentum_1} - ${angular_momentum_2} ))"
 
 # Define strength of nonlinear mean-field interaction.
-declare -r nonlinear_coupling_amplitude=50.0
+declare -r nonlinear_coupling_amplitude=0.0
 
 # Define angular velocity of the rotating one-dimensional ring.
-declare -r rotation_rate_of_ring=0.0015
+declare -r rotation_rate_of_ring=0.001
 
 # Make run directory.
 mkdir -p "${PWD}/${run_directory}"
