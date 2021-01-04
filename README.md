@@ -19,7 +19,7 @@ Sherman-Morrison algorithm.
 
 ## USAGE
 
-make
+make  
 ./gpecn1Dtdpbc.sh
 
 ## DEPENDENCIES
@@ -64,4 +64,4 @@ The MIT License (MIT)
 
 ## LAST UPDATED
 
-Saturday, January 2nd, 2021
+Sunday, January 3rd, 2021
