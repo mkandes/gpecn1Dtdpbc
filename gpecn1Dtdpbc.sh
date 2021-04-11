@@ -28,12 +28,12 @@
 #
 # LAST UPDATED
 #
-#     Saturday, January 2nd, 2021
+#     Saturday, April 10th, 2021
 #
 # ----------------------------------------------------------------------
 
 # Declare the version number of gpecn1Dtdpbc.
-declare -r version_number='0.5.3'
+declare -r version_number='0.5.5'
 
 # Declare system name the simulation will be performed on.
 declare -r system_name='expanse'
@@ -42,7 +42,7 @@ declare -r system_name='expanse'
 declare -r run_type='sagnac'
 
 # Declare run date.
-declare -r run_date='20210102'
+declare -r run_date='20210410'
 
 # Declare run number.
 declare -r run_number='001'
@@ -51,13 +51,13 @@ declare -r run_number='001'
 declare -r run_directory="gpecn1Dtdpbc-v${version_number}-${system_name}-${run_type}-${run_date}-${run_number}"
 
 # Define total number grid points on the one-dimensional ring (S1).
-declare -r number_of_grid_points=1256
+declare -r number_of_grid_points=6283
 
 # Define total number of time steps in simulation.
-declare -r number_of_time_steps=80000
+declare -r number_of_time_steps=2000000
 
 # Define the number of time steps to skip between writing output to disk.
-declare -r number_of_time_steps_between_writes=80
+declare -r number_of_time_steps_between_writes=2000
 
 # Define the number of Crank-Nicolson iterations performed per time step.
 declare -r number_of_iterations_per_time_step=1
@@ -201,49 +201,54 @@ cd "${PWD}/${run_directory}"
 echo "$(set -o posix; set)" > "${run_directory}.output"
 
 # Compute initial state wave function.
-./wavefunc.x "${number_of_grid_points}" \
-             "${wave_function_switch}" \
-             "${radius_of_ring}" \
-             "${rotation_rate_of_ring}" \
-             "${gaussian_oscillator_strength}" \
-             "${initial_angular_position}" \
-             "${amplitude_1}" \
-             "${amplitude_2}" \
-             "${angular_momentum_1}" \
-             "${angular_momentum_2}" \
-             "${initial_phase_1}" \
-             "${initial_phase_2}" > wavefunc.output
+./wavefunc.x \
+  "${number_of_grid_points}" \
+  "${wave_function_switch}" \
+  "${radius_of_ring}" \
+  "${rotation_rate_of_ring}" \
+  "${gaussian_oscillator_strength}" \
+  "${initial_angular_position}" \
+  "${amplitude_1}" \
+  "${amplitude_2}" \
+  "${angular_momentum_1}" \
+  "${angular_momentum_2}" \
+  "${initial_phase_1}" \
+  "${initial_phase_2}" > wavefunc.output
 
 # Compute time-independent external potential.
-./potential.x "${number_of_grid_points}" \
-              "${external_potential_switch}" \
-              "${radius_of_ring}" \
-              "${gaussian_oscillator_strength}" \
-              "${initial_angular_position}" > potential.output
+./potential.x \
+  "${number_of_grid_points}" \
+  "${external_potential_switch}" \
+  "${radius_of_ring}" \
+  "${gaussian_oscillator_strength}" \
+  "${initial_angular_position}" > potential.output
 
 # Compute nonlinear, mean-field potential.
-./nonlinear.x "${number_of_grid_points}" \
-              "${nonlinear_coupling_switch}" \
-              "${radius_of_ring}" \
-              "${nonlinear_coupling_amplitude}" > nonlinear.output
+./nonlinear.x \
+  "${number_of_grid_points}" \
+  "${nonlinear_coupling_switch}" \
+  "${radius_of_ring}" \
+  "${nonlinear_coupling_amplitude}" > nonlinear.output
 
 # Simulate.
-./gpecn1Dtdpbc.x "${number_of_grid_points}" \
-                 "${number_of_time_steps}" \
-                 "${number_of_time_steps_between_writes}" \
-                 "${number_of_iterations_per_time_step}" \
-                 "${imaginary_time_switch}" \
-                 "${radius_of_ring}" \
-                 "${rotation_rate_of_ring}" \
-                 "${gamma_factor}" > gpecn1Dtdpbc.output
+./gpecn1Dtdpbc.x \
+  "${number_of_grid_points}" \
+  "${number_of_time_steps}" \
+  "${number_of_time_steps_between_writes}" \
+  "${number_of_iterations_per_time_step}" \
+  "${imaginary_time_switch}" \
+  "${radius_of_ring}" \
+  "${rotation_rate_of_ring}" \
+  "${gamma_factor}" > gpecn1Dtdpbc.output
 
 # Compute expectation values.
-./expectation.x "${number_of_grid_points}" \
-                "${number_of_time_steps}" \
-                "${number_of_time_steps_between_writes}" \
-                "${radius_of_ring}" \
-                "${rotation_rate_of_ring}" \
-                "${gamma_factor}" > expectation.output
+./expectation.x \
+  "${number_of_grid_points}" \
+  "${number_of_time_steps}" \
+  "${number_of_time_steps_between_writes}" \
+  "${radius_of_ring}" \
+  "${rotation_rate_of_ring}" \
+  "${gamma_factor}" > expectation.output
 
 # Write (probability) density, real, and imaginary components of binary
 # wave function to ascii formatted file
@@ -252,10 +257,11 @@ end_file="$(( ${start_file}+${number_of_time_steps}/${number_of_time_steps_betwe
 current_file="${start_file}"
 output_shift=10000
 while [[ "${current_file}" -le "${end_file}" ]]; do
-  ./binary.x "${number_of_grid_points}" \
-             "${current_file}" \
-             "${output_shift}" \
-             "${radius_of_ring}" >> binary.output
+  ./binary.x \
+    "${number_of_grid_points}" \
+    "${current_file}" \
+    "${output_shift}" \
+    "${radius_of_ring}" >> binary.output
   ((current_file+=1))
 done
 
@@ -267,13 +273,14 @@ end_frequency="$(( carrier_frequency + sideband_frequency_span ))"
 for (( current_frequency = start_frequency; \
        current_frequency <= end_frequency; \
        current_frequency++ )); do
-  ./ftpsd.x "${number_of_grid_points}" \
-            "${number_of_time_steps_between_writes}" \
-            "${start_file}" \
-            "${end_file}" \
-            "${radius_of_ring}" \
-            "${gamma_factor}" \
-            "${current_frequency}" >> ftpsd.output
+  ./ftpsd.x \
+    "${number_of_grid_points}" \
+    "${number_of_time_steps_between_writes}" \
+    "${start_file}" \
+    "${end_file}" \
+    "${radius_of_ring}" \
+    "${gamma_factor}" \
+    "${current_frequency}" >> ftpsd.output
    mv fort.500 fort.500."${current_frequency}"
 done
 
@@ -283,38 +290,41 @@ output_shift=20000
 minimum_momentum=-100
 maximum_momentum=100
 while [ "${current_file}" -le "${end_file}" ]; do
-  ./momentum.x "${number_of_grid_points}" \
-               "${current_file}" \
-               "${output_shift}" \
-               "${minimum_momentum}" \
-               "${maximum_momentum}" \
-               "${radius_of_ring}" >> momentum.output
+  ./momentum.x \
+    "${number_of_grid_points}" \
+    "${current_file}" \
+    "${output_shift}" \
+    "${minimum_momentum}" \
+    "${maximum_momentum}" \
+    "${radius_of_ring}" >> momentum.output
   ((current_file+=1))
 done
 
 # Create space-time data.
 output_file=591
-./spacetime.x "${number_of_grid_points}" \
-              "${number_of_time_steps}" \
-              "${number_of_time_steps_between_writes}" \
-              "${start_file}" \
-              "${end_file}" \
-              "${output_file}" \
-              "${radius_of_ring}" \
-              "${gamma_factor}" > spacetime.output
+./spacetime.x \
+  "${number_of_grid_points}" \
+  "${number_of_time_steps}" \
+  "${number_of_time_steps_between_writes}" \
+  "${start_file}" \
+  "${end_file}" \
+  "${output_file}" \
+  "${radius_of_ring}" \
+  "${gamma_factor}" > spacetime.output
 
 # Create freq-time data.
 output_file=592
-./freqtime.x "${number_of_grid_points}" \
-             "${number_of_time_steps}" \
-             "${number_of_time_steps_between_writes}" \
-             "${start_file}" \
-             "${end_file}" \
-             "${output_file}" \
-             "${minimum_momentum}" \
-             "${maximum_momentum}" \
-             "${radius_of_ring}" \
-             "${gamma_factor}" > freqtime.output
+./freqtime.x \
+  "${number_of_grid_points}" \
+  "${number_of_time_steps}" \
+  "${number_of_time_steps_between_writes}" \
+  "${start_file}" \
+  "${end_file}" \
+  "${output_file}" \
+  "${minimum_momentum}" \
+  "${maximum_momentum}" \
+  "${radius_of_ring}" \
+  "${gamma_factor}" > freqtime.output
 
 rm wavefunc.x
 rm potential.x
