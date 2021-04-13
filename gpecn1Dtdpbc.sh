@@ -33,7 +33,7 @@
 # ----------------------------------------------------------------------
 
 # Declare the version number of gpecn1Dtdpbc.
-declare -r version_number='0.5.7'
+declare -r version_number='0.5.8'
 
 # Declare system name the simulation will be performed on.
 declare -r system_name='expanse'

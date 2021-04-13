@@ -6,6 +6,11 @@ dev
       effect as well as the dynamics of an effective one-dimensional 
       Compton generator
 
+2021/04/13 v0.5.8
+
+    + Updated all gnuplot figures again to utilize the output generated
+      by the new default simulation in the gpecn1Dtdpbc.sh run script.
+
 2021/04/13 v0.5.7
 
     + Updated all copyright notices.
