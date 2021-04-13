@@ -3,18 +3,107 @@
 #
 # LAST UPDATED
 #
-#     January, 2nd, 2021
+#     April, 13th, 2021
 #
 # ----------------------------------------------------------------------
-COMPILER := gfortran
-COMPILER_OPTIONS := -fimplicit-none \
-                    -ffree-form \
-                    -ffree-line-length-none \
-                    -std=gnu \
-                    -O3 \
-                    -mtune=native \
-                    -fdefault-real-8 \
-                    -fdefault-double-8
+#
+#    Specify the SHELL that will interpret this Makefile. This line avoids
+#    issues on systems where the SHELL variable might be inherited from
+#    the environment. 
+
+SHELL := /bin/bash
+
+#    Get hostname of the machine the source will be compiled and run on.
+
+HOSTNAME := $(shell hostname)
+
+#    Specify general user-defined compilation options.
+
+COMPILER     := gfortran
+OPTIMIZATION := ON
+OPENMP       := OFF
+DEBUG        := OFF
+PROFILE      := OFF
+
+#    Set compiler-specific options.
+
+ifeq ($(COMPILER),gfortran)
+
+   STANDARD_OPTIONS     := -fimplicit-none -fmodule-private \
+                           -ffree-form -ffree-line-length-none -std=gnu
+   INTEGER_OPTIONS      := -fdefault-integer-8
+   REAL_OPTIONS         := -fdefault-real-8 -fdefault-double-8
+   OPTIMIZATION_OPTIONS := -O3 -ffast-math -mtune=native
+   OPENMP_OPTIONS       := -fopenmp
+   CHECK_OPTIONS        := -fcheck=all
+   DEBUG_OPTIONS        := -ffpe-trap=invalid,overflow -fbacktrace \
+                           -fdump-core -finit-real=nan
+   WARNING_OPTIONS      := -Wall -fmax-errors=0 -Wno-array-temporaries \
+                           -Warray-bounds -Wcharacter-truncation \
+                           -Wline-truncation -Wconversion-extra \
+                           -Wimplicit-interface -Wimplicit-procedure \
+                           -Wunderflow -Wextra -Wuninitialized
+   PROFILE_OPTIONS      := -pg
+
+endif
+
+ifeq ($(COMPILER),ifort)
+
+   STANDARD_OPTIONS     := -implicitnone -free -stand none -module build
+   INTEGER_OPTIONS      := -integer-size 64
+   REAL_OPTIONS         := -real-size 64 -double-size 64
+   OPTIMIZATION_OPTIONS := -O3 -fast -mtune=native
+   OPENMP_OPTIONS       := -qopenmp
+   CHECK_OPTIONS        := -check all
+   DEBUG_OPTIONS        := -debug all
+   WARNING_OPTIONS      := -warn all
+   PROFILE_OPTIONS      := -pg
+
+endif
+
+ifeq ($(COMPILER),flang)
+
+   STANDARD_OPTIONS     := -Mfreeform -Mstandard
+   INTEGER_OPTIONS      := -fdefault-integer-8
+   REAL_OPTIONS         := -fdefault-real-8
+   OPTIMIZATION_OPTIONS := -O3 -ffast-math -mtune=native
+   OPENMP_OPTIONS       := -mp 
+   CHECK_OPTIONS        :=
+   DEBUG_OPTIONS        :=
+   WARNING_OPTIONS      := -Weverything
+   PROFILE_OPTIONS      := -pg
+
+endif
+
+COMPILER_OPTIONS := $(STANDARD_OPTIONS) $(INTEGER_OPTIONS) \
+                    $(REAL_OPTIONS)
+
+ifeq ($(DEBUG),ON)
+
+   COMPILER_OPTIONS += -O0 -C -g $(CHECK_OPTIONS) $(DEBUG_OPTIONS) \
+                       $(WARNING_OPTIONS)
+
+endif
+
+ifeq ($(PROFILE),ON)
+
+   COMPILER_OPTIONS += $(PROFILE_OPTIONS)
+
+endif
+
+ifeq ($(OPTIMIZATION),ON)
+
+   COMPILER_OPTIONS += $(OPTIMIZATION_OPTIONS)
+
+endif
+
+ifeq ($(OPENMP),ON)
+
+   COMPILER_OPTIONS += $(OPENMP_OPTIONS)
+
+endif
+
+
 SOURCE_DIR := source
 LAPACK_DIR := libraries/lapack
 BUILD_DIR := build
