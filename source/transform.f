@@ -19,7 +19,7 @@
 !
 ! COPYRIGHT
 !     
-!     Copyright (c) 2017 Martin Charles Kandes
+!     Copyright (c) 2010 - 2021 Martin Charles Kandes
 !
 ! LICENSE
 !

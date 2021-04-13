@@ -28,12 +28,12 @@
 #
 # LAST UPDATED
 #
-#     Saturday, April 10th, 2021
+#     Tuesday, April 13th, 2021
 #
 # ----------------------------------------------------------------------
 
 # Declare the version number of gpecn1Dtdpbc.
-declare -r version_number='0.5.5'
+declare -r version_number='0.5.7'
 
 # Declare system name the simulation will be performed on.
 declare -r system_name='expanse'

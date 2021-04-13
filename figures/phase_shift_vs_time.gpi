@@ -32,7 +32,7 @@
 #
 # LAST UPDATED
 #
-#     Sunday, January, 2021
+#     Sunday, April 11th, 2021
 #
 # ----------------------------------------------------------------------
 
@@ -59,8 +59,8 @@ set arrow 3 from 94.24777960769379,0.0 to 94.24777960769379,3.14159265359 nohead
 set xzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
 set yzeroaxis lt 0 linewidth 3 linecolor rgb "#696969"
 f(x) = 2.0 * 0.001 * 10 * x
-plot '../gpecn1Dtdpbc-v0.5.3-expanse-sagnac-20210102-001/fort.500.20' using 1:2 axes x1y1 title 'Phase Shift' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
-     '../gpecn1Dtdpbc-v0.5.3-expanse-sagnac-20210102-001/fort.500.20' using 1:(sqrt($3**2+$4**2)) axes x1y2 title 'Amplitude' with lines dashtype 3 linewidth 5 linecolor '#396ab1', \
+plot '../gpecn1Dtdpbc-v0.5.5-expanse-sagnac-20210410-001/fort.500.20' using 1:2 axes x1y1 title 'Phase Shift' with lines dashtype 1 linewidth 5 linecolor '#cc2529', \
+     '../gpecn1Dtdpbc-v0.5.5-expanse-sagnac-20210410-001/fort.500.20' using 1:(sqrt($3**2+$4**2)) axes x1y2 title 'Amplitude' with lines dashtype 3 linewidth 5 linecolor '#396ab1', \
     f(x) axes x1y1 not with lines linetype 0 linewidth 5 linecolor rgb "#696969"
 
 # =========================================================================
